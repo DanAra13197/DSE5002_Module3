@@ -39,7 +39,7 @@ if(x<10)
 # to advance to the next line in the printing
 
 cat("Y is ",y ,"\n")
-cat("Z is ",z)
+cat("Z is ",z,"\n")
 ```
 
 ## *Action Required:  alter my code so that Y and Z are not altered*
@@ -54,7 +54,7 @@ We use an else statement
 ```{R}
 y=0
 z=0
-x=5
+x=11
 
 if(x<10)
 {
@@ -83,7 +83,7 @@ Each if statement can only have one else
 We can put if statements inside elses to allow for more possible options
 
 ```{R}
-x=-1
+x=2
 if(x<0)
 {
   cat("Negative X value\n")
@@ -127,7 +127,13 @@ scones_in_stock=TRUE
 
 # write your code here
 
-
+if(people_in_line <= 2) {
+  cat("I'll stop for coffee.\n")
+} else if(people_in_line <= 4) {
+  cat("I'll stop for coffee because they have scones in stock.\n")
+} else {
+  cat("I won't stop for coffee today.\n")
+}
 ```
 
 ## If-else assignment statements
@@ -140,7 +146,7 @@ second for FALSE
 it might look like this
 
 ```{R}
-x=5
+x=4
 y=ifelse(x<10,0.125*x,0.25*x)
 y
 ```

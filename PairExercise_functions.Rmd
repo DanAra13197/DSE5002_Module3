@@ -69,13 +69,23 @@ We use a function by calling it
 
 ```{R}
 x2power(3,2)
+x2power(2,2)
+
 ```
 
 ## *Action Required*
 
 Write your self a function that takes in three variables, a, b, and c
 and returns (a+b)/c
+```{R}
+my_function=function(a, b, c) {
+  return((a + b) / c)
+}
+result=my_function(5, 10, 3)
+print(result)
 
+
+```
 
 ## Default values
 
@@ -150,6 +160,37 @@ Add some basic error trapping to the function you wrote.
 Make sure c is not zero
 
 ```{R}
+
+c_no=function(a,b,c)
+{
+    if(!is.numeric(a))
+  {
+    cat("Please enter only numeric values")
+    return(NULL)
+  }
+  if(!is.numeric(b))
+  {
+     cat("Please enter only numeric values")
+     return(NULL)
+  }
+  if(length(c)>1)
+  {
+     cat("Please enter a scalar value")
+     return(NULL)
+  } 
+  
+  
+return((a + b) / c)
+}
+
+
+c_no(4,4,9)
+
+c_no("bob","37")
+
+c_no(1:5,4:7,5:6)
+
+
 
 ```
 

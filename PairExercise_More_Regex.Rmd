@@ -49,6 +49,11 @@ str_view(fruit,"berry")
 ## *Question/Action*
 
 try this with apple and star
+```{R}
+str_view("apple")
+str_view("star")
+
+```
 
 # combinations and wild cards
 

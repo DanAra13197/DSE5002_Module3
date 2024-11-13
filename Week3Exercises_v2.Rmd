@@ -2,7 +2,9 @@
 title: "Week 3 Exercises"
 author: "HD Sheets"
 date: "10/1/2024"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 Please complete all exercises below. You may use any library that we have covered in class UP TO THIS POINT. 
@@ -29,12 +31,20 @@ Note:
 You will probably want to use stringr
 
 ```{R}
+library(stringr)
+
 name_in="Sheets, Dave"
 
-reorder_name<-function(last_first){
-  #your code here
+reorder_name=function(last_first) {
+#Split string by the comma and remove extra spaces
+name_parts=str_split(last_first, ",")[[1]]
+#Clean up any leading/trailing whitespace from the names
+last_name=str_trim(name_parts[1])
+first_name=str_trim(name_parts[2])
+return(paste(first_name, last_name))
 }
-
+result=reorder_name(name_in)
+print(result)
 
 ```
 
@@ -42,14 +52,18 @@ reorder_name<-function(last_first){
 with three columns,  x, x^2 and the square root of x
 
 ```{R}
-x=c(1,3,5,7,9,11,13)
-
-powers_df<-function(x)
-{
-  
+powers_df=function(x) {
+# Create a data frame with columns x, x^2, and sqrt(x)
+df=data.frame(
+x = x,
+squared= x^2,
+sqrt_x= sqrt(x)
+  )
+return(df)
 }
-
-#your code here
+x=c(1, 3, 5, 7, 9, 11, 13)
+result=powers_df(x)
+print(result)
 
 ```
 
@@ -60,12 +74,38 @@ powers_df<-function(x)
     y=0.5x if x>=0
     
     This is a variant on a relu function as used in some neural networks.
+```{R}
+relu_variant=function(x) {
+if (x < 0) {
+return(0.3 * x)
+  } else {
+    return(0.5 * x)
+  }
+}
+print(relu_variant(-5))  # Output: -1.5
+print(relu_variant(4))   # Output: 2.0
+
+```
+
 
 4.) Write a function that takes in a value x and returns the first power of two
 greater than x  (use a While loop)
+```{R}
+next_power_of_two=function(x) {
+power=1
+while (power <= x) {
+power=power * 2
+  }
+return(power)
+}
+print(next_power_of_two(5))  # Output: 8
+print(next_power_of_two(12)) # Output: 16
+
+```
 
 
 5) Two Sum - Write a function named two_sum()
+
 
 Given a vector of integers nums and an integer target, return indices of the two numbers such that they add up to target.
 
@@ -102,24 +142,20 @@ Only one valid answer exists.
 *Use the function seq_along to iterate*
 
 ```{r}
-two_sum <- function(nums_vector,target){
-  #your code here
- 
+two_sum=function(nums_vector, target) {
+for (i in seq_along(nums_vector)) {
+for (j in seq_along(nums_vector)) {
+if (i != j && nums_vector[i] + nums_vector[j] == target) {
+return(c(i-1, j-1))
 }
+}
+}#recuerda que la cantidad de parentesis dentados es la misma que las cierra
 
-
-
-
-# Test code
-nums_vector <- c(5,7,12,34,6,10,8,9)
-target <- 13
- 
-z=two_sum(nums_vector,target)
-print(z)
-#expected answers
-#[1] 1 7
-#[1] 2 5
-#[1] 5 2
+}
+nums_vector=c(5,7,12,34,6,10,8,9)
+target=13
+z = two_sum(nums_vector, target)
+print(z)  # Expected: c(1, 7) or c(2, 5)
 
 ```
 
@@ -142,6 +178,18 @@ use the same regex search pattern from each
 a="Please call me at 456-123-2329, asap"
 b="Hey, we have a code 234 on machine a-234-12, call me at 678-321-98766"
 c="On 12-23-2022, Joe over at 122 Turnpike, dialled 912-835-4756, tell me by 9:02 pm Wed"
+
+# Regex pattern for phone number
+phone_pattern="\\d{3}-\\d{3}-\\d{4}"#This part i found it searching online, i will read more about it
+#lee mas de esto, este chapter es muy dificil
+# Extract phone numbers
+phone_a=str_extract(a, phone_pattern)
+phone_b=str_extract(b, phone_pattern)
+phone_c=str_extract(c, phone_pattern)
+
+print(phone_a)  # Output: "456-123-2329"
+print(phone_b)  # Output: "678-321-98766"
+print(phone_c)  # Output: "912-835-4756"
 ```
 
 7.)  For lines below,  extract the domains (ie the part of the address after @)
@@ -150,6 +198,23 @@ c="On 12-23-2022, Joe over at 122 Turnpike, dialled 912-835-4756, tell me by 9:0
 d="jimmy.halibut@gmail.com"
 e="His address is:  c.brown@hopeles.org, do write him"
 f="h.potter@hogwarts.edu is bouncing back on me, I wonder why?"
+
+# Regex pattern to extract domains
+domain_pattern="@([a-zA-Z0-9.-]+)"#This part i found it searching online, i will read more about it.
+
+# Extract domains
+domain_d=str_extract(d, domain_pattern)
+domain_e=str_extract(e, domain_pattern)
+domain_f=str_extract(f, domain_pattern)
+
+# Remove the "@" symbol
+domain_d=sub("@", "", domain_d)
+domain_e=sub("@", "", domain_e)
+domain_f=sub("@", "", domain_f)
+
+print(domain_d)  # Output: "gmail.com"
+print(domain_e)  # Output: "hopeles.org"
+print(domain_f)  # Output: "hogwarts.edu"
 
 ```
 
